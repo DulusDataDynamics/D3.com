@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulu's Data Dynamics | The Future of Technology</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== Global Styles ===== */
+        :root {
+            --primary-blue: #0066cc;
+            --primary-dark: #121212;
+            --primary-light: #f8f9fa;
+            --accent-orange: #ff6b35;
+            --accent-teal: #20c997;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3 {
+            font-weight: 800;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: #0052a3;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #1da851;
+        }
+        
+        .btn-accent {
+            background: var(--accent-orange);
+        }
+        
+        .btn-accent:hover {
+            background: #e05a2b;
+        }
+        
+        /* ===== Header & Navigation ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background-color: var(--primary-dark);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+        }
+        
+        /* ===== Hero Section ===== */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-dark), #1e3c72);
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--accent-teal);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            max-width: 600px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-20px); }
+            100% { transform: translateY(-50%) translateX(0); }
+        }
+        
+        /* ===== About Section ===== */
+        .about {
+            background-color: white;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+        
+        .about-text h2 span {
+            color: var(--primary-blue);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            color: var(--primary-dark);
+            margin-top: 20px;
+        }
+        
+        /* ===== Services Section ===== */
+        .services {
+            background-color: #f5f7fa;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-card i {
+            font-size: 50px;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+        
+        .service-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        /* ===== Results Section ===== */
+        .results {
+            background-color: white;
+            text-align: center;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .result-card {
+            background: #f5f7fa;
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .result-card i {
+            font-size: 40px;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+        
+        .result-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .result-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .client-name {
+            font-weight: 600;
+            margin-top: 15px;
+            color: var(--primary-dark);
+        }
+        
+        /* ===== Testimonials Section ===== */
+        .testimonials {
+            background-color: #f5f7fa;
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 20px;
+            text-align: center;
+        }
+        
+        .testimonial-content {
+            font-size: 18px;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .testimonial-role {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* ===== CTA Section ===== */
+        .cta {
+            background: linear-gradient(135deg, var(--primary-blue), #1e3c72);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* ===== Contact Section ===== */
+        .contact {
+            background-color: white;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .contact-item i {
+            font-size: 24px;
+            color: var(--primary-blue);
+        }
+        
+        .contact-text h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .contact-text a {
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-text a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .contact-form {
+            background: #f5f7fa;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* ===== Footer ===== */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+        }
+        
+        .footer-col p, .footer-col a {
+            color: #bbb;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 14px;
+        }
+        
+        /* ===== Responsive Styles ===== */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero-image {
+                opacity: 0.3;
+                width: 100%;
+                max-width: 100%;
+                right: auto;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--primary-dark);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: all 0.5s ease;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <img src="https://via.placeholder.com/40x40/0066cc/ffffff?text=DDD" alt="Dulu's Data Dynamics Logo">
+                    Dulu's Data Dynamics
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#results">Results</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>The Future of <span>Technology</span> Solutions</h1>
+                <p>We deliver cutting-edge web development, software solutions, data analytics, and AI automation to transform your business.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-accent">Get Started</a>
+                    <a href="https://wa.me/27647223074" class="btn btn-whatsapp">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Us
+                    </a>
+                </div>
+            </div>
+        </div>
+       
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Meet <span>Keshav Dulu</span></h2>
+                    <p>Founder & CEO of Dulu's Data Dynamics, a visionary leader in technology solutions with a passion for innovation and digital transformation.</p>
+                    <p>With years of experience in the tech industry, I've dedicated my career to helping businesses leverage cutting-edge technologies to solve complex problems and drive growth.</p>
+                    <p>At Dulu's Data Dynamics, we combine technical expertise with business acumen to deliver solutions that make a real impact.</p>
+                    <p class="signature">Keshav Dulu</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>We offer comprehensive technology solutions tailored to your business needs.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Web Development</h3>
+                    <p>Custom websites and web applications built with modern technologies for optimal performance and user experience.</p>
+                    <a href="#contact" class="btn">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Software Development</h3>
+                    <p>Tailored software solutions designed to streamline your business operations and enhance productivity.</p>
+                    <a href="#contact" class="btn">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Data Solutions</h3>
+                    <p>Data analytics, visualization, and management solutions to turn your data into actionable insights.</p>
+                    <a href="#contact" class="btn">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-robot"></i>
+                    <h3>AI Automation</h3>
+                    <p>Intelligent automation solutions powered by artificial intelligence to optimize your workflows.</p>
+                    <a href="#contact" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results" id="results">
+        <div class="container">
+            <div class="section-title">
+                <h2>Client Results</h2>
+                <p>See the measurable impact we've delivered for our clients</p>
+            </div>
+            <div class="results-grid">
+                <div class="result-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>300% Increase</h3>
+                    <p>In website traffic for an e-commerce client after our SEO optimization and redesign.</p>
+                    <p class="client-name">- RetailTech Solutions</p>
+                </div>
+                <div class="result-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>80% Time Saved</h3>
+                    <p>Automated business processes for a logistics company using our custom software.</p>
+                    <p class="client-name">- Swift Logistics</p>
+                </div>
+                <div class="result-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>2X Revenue Growth</h3>
+                    <p>Data-driven marketing strategy helped a SaaS company double their revenue.</p>
+                    <p class="client-name">- CloudApps Inc.</p>
+                </div>
+                <div class="result-card">
+                    <i class="fas fa-users"></i>
+                    <h3>500% User Growth</h3>
+                    <p>Mobile app development and launch strategy for a health tech startup.</p>
+                    <p class="client-name">- HealthTrack</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Client Testimonials</h2>
+                <p>What our clients say about working with us</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "Dulu's Data Dynamics transformed our online presence completely. Their web development team delivered beyond our expectations, resulting in a 40% increase in customer engagement."
+                    </div>
+                    <div class="testimonial-author">Sarah Johnson</div>
+                    <div class="testimonial-role">Marketing Director, RetailTech Solutions</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "The AI automation solutions implemented by Keshav's team saved us hundreds of work hours each month. Their technical expertise is matched only by their business understanding."
+                    </div>
+                    <div class="testimonial-author">Michael Chen</div>
+                    <div class="testimonial-role">CEO, Swift Logistics</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "Working with Dulu's Data Dynamics was a game-changer for our data strategy. They helped us uncover insights we didn't know existed in our data, leading to better decision-making across the company."
+                    </div>
+                    <div class="testimonial-author">David Wilson</div>
+                    <div class="testimonial-role">CTO, CloudApps Inc.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Transform Your Business?</h2>
+            <p>Let's discuss how our technology solutions can drive your business forward in the digital age.</p>
+            <a href="https://wa.me/27647223074" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch to discuss your project or learn more about our services.</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div class="contact-text">
+                            <h3>Phone</h3>
+                            <a href="tel:+27647223074">+27 64 722 3074</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-text">
+                            <h3>Email</h3>
+                            <a href="mailto:dulusdatadynamics@gmail.com">dulusdatadynamics@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div class="contact-text">
+                            <h3>WhatsApp</h3>
+                            <a href="https://wa.me/27647223074" target="_blank">Chat with us</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>Dulu's Data Dynamics</h3>
+                    <p>The Future of Technology Solutions. We help businesses leverage cutting-edge technologies for growth and innovation.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <a href="#">Web Development</a>
+                    <a href="#">Software Development</a>
+                    <a href="#">Data Solutions</a>
+                    <a href="#">AI Automation</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#services">Services</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <a href="tel:+27647223074">+27 64 722 3074</a>
+                    <a href="mailto:dulusdatadynamics@gmail.com">dulusdatadynamics@gmail.com</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Dulu's Data Dynamics. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the form data to a server
+            // For demonstration, we'll just show an alert
+            alert(`Thank you, ${name}! Your message has been sent. We'll contact you at ${email} soon.`);
+            
+            // Reset the form
+            contactForm.reset();
+        });
+        
+        // WhatsApp button functionality
+        document.querySelectorAll('.btn-whatsapp').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // You can add additional tracking here if needed
+                console.log('WhatsApp button clicked');
+            });
+        });
+
+        // Simple testimonial slider
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.style.display = i === index ? 'block' : 'none';
+            });
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+        
+        // Initialize
+        showTestimonial(0);
+        setInterval(nextTestimonial, 5000);
+    </script>
+</body>
+</html>
