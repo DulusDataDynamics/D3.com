@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dulu's Data Dynamics | IT Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #0A2463;
+            color: white;
+            line-height: 1.6;
+        }
+        
+        /* Logo Styles */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00D1C5, #2A0B45);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Animations */
+        .slide-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideFadeIn 1s forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.3s; }
+        .delay-2 { animation-delay: 0.6s; }
+        .delay-3 { animation-delay: 0.9s; }
+        
+        @keyframes slideFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        /* NEW: Hero Prompt Styling */
+        .tagline {
+            font-size: 1.4rem;
+            margin: 1.5rem 0;
+        }
+        
+        .highlight {
+            color: #00D1C5;
+            font-weight: bold;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        /* NEW: Service Prompt Styling */
+        .service-tagline {
+            font-style: italic;
+            color: #00D1C5;
+            margin: 15px 0;
+            font-size: 1rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        /* NEW: Contact Prompt Styling */
+        .prompt-box {
+            background: rgba(0,209,197,0.1);
+            border-left: 3px solid #00D1C5;
+            padding: 20px;
+            margin: 0 auto 40px;
+            max-width: 600px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .prompt-box i {
+            color: #00D1C5;
+            font-size: 1.5rem;
+        }
+        
+        .contact-info {
+            margin-top: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        
+        a.contact-item {
+            color: #00D1C5;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        a.contact-item:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(0,209,197,0.5);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(0,0,0,0.2);
+        }
+        
+        /* NEW: Footer Prompt Styling */
+        .closing-prompt {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #2A0B45, #00D1C5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="logo">
+            <div class="logo-circle">D³</div>
+            <span>Dulu's Data Dynamics</span>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="slide-fade">Custom IT Solutions by Keshav Dulu</h1>
+            
+             <!-- NEW: Hero Section Prompt -->
+             <p class="tagline slide-fade delay-1">
+                <span class="highlight">"From your tap to the Cloud</span> – precision IT solutions"
+            </p>
+            <div class="contact-info slide-fade delay-2">
+                <a href="mailto:keshavdulu2@gmail.com" class="contact-item">
+                    <i class="fas fa-envelope"></i> keshavdulu2@gmail.com
+                </a>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i> +27 64 722 3074
+                </div>
+                
+                <!-- WhatsApp Button -->
+                <a href="https://wa.me/27647223074" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2 class="slide-fade">Our Services</h2>
+        
+        <div class="services-grid">
+            <div class="service-card slide-fade delay-1">
+                <i class="fas fa-code"></i>
+                <h3>Web Development</h3>
+                
+                <!-- NEW: Web Dev Prompt -->
+                <p class="service-tagline">"24/7 sales reps coded by Keshav Dulu"</p>
+                
+                <ul>
+                    <li>E-commerce sites</li>
+                    <li>Business portfolios</li>
+                    <li>Web applications</li>
+                </ul>
+            </div>
+            
+            <div class="service-card slide-fade delay-2">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Software Development</h3>
+                
+                <!-- NEW: Software Dev Prompt -->
+                <p class="service-tagline">"Bespoke software that fits like a tailored suit"</p>
+                
+                <ul>
+                    <li>Custom business software</li>
+                    <li>Mobile applications</li>
+                    <li>Automation tools</li>
+                </ul>
+            </div>
+            
+            <div class="service-card slide-fade delay-3">
+                <i class="fas fa-database"></i>
+                <h3>Data Solutions</h3>
+                
+                <!-- NEW: Data Solutions Prompt -->
+                <p class="service-tagline">"Turn spreadsheet nightmares into dashboard dreams"</p>
+                
+                <ul>
+                    <li>Data analytics</li>
+                    <li>Business intelligence</li>
+                    <li>Database systems</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <!-- NEW: Contact Section Prompt -->
+        <div class="prompt-box slide-fade">
+            <i class="fas fa-bolt"></i>
+            <p>"Meeting slots available this week - let's build your digital advantage"</p>
+        </div>
+        
+        <h2 class="slide-fade delay-1">Get In Touch</h2>
+        
+        <div class="contact-info slide-fade delay-2">
+            <a href="mailto:keshavdulu2@gmail.com" class="contact-item">
+                <i class="fas fa-envelope"></i> keshavdulu2@gmail.com
+            </a>
+            <div class="contact-item">
+                <i class="fas fa-phone"></i> +27 64 722 3074
+            </div>
+            <a href="https://wa.me/27647223074" class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <!-- NEW: Footer Prompt -->
+        <div class="closing-prompt slide-fade">
+            "Your data works harder when D³ engineers it"
+        </div>
+        
+        <p>© 2024 Dulu's Data Dynamics. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Simple animation trigger
+        document.addEventListener('DOMContentLoaded', function() {
+            // This ensures animations play when page loads
+        });
+        
+        // NEW: Prompt rotation system (optional)
+        const heroPrompts = [
+            "From your tap to the Cloud – precision IT solutions",
+            "Transforming data chaos into business clarity",
+            "Your vision + our expertise = unstoppable solutions"
+        ];
+        
+        // Uncomment to rotate hero prompt weekly
+        // document.querySelector('.tagline').innerHTML = 
+        //     heroPrompts[Math.floor(Math.random() * heroPrompts.length)];
+    </script>
+</body>
+</html>

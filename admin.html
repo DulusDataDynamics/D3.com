@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Dulu's Data Dynamics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    <style>
+        .news-item {
+            transition: all 0.3s ease;
+        }
+        .news-item:hover {
+            transform: translateY(-2px);
+        }
+        .upload-area {
+            border: 2px dashed #4f46e5;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: #6366f1;
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+        .upload-area.dragover {
+            border-color: #10b981;
+            background-color: rgba(16, 185, 129, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-600">
+                        DULU'S DATA DYNAMICS - ADMIN
+                    </span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium hover:text-indigo-400 transition">
+                        View Site
+                    </a>
+                    <button id="logout-btn" class="px-3 py-2 rounded-md text-sm font-medium bg-red-600 hover:bg-red-700 transition">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-2">News Management</h1>
+            <p class="text-gray-400">Add, edit, and manage news articles with videos for your website</p>
+        </div>
+
+        <!-- Firebase Status -->
+        <div id="firebase-status" class="mb-6 p-4 rounded-lg bg-gray-800 border border-gray-700">
+            <div class="flex items-center space-x-2">
+                <div id="status-indicator" class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <span id="status-text" class="text-sm">Connecting to Firebase...</span>
+            </div>
+        </div>
+
+        <!-- Add News Form -->
+        <div class="bg-gray-800 rounded-xl p-6 mb-8 border border-gray-700">
+            <h2 class="text-xl font-bold mb-4">Add New Article</h2>
+            <form id="news-form" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="title" class="block text-sm font-medium mb-2">Title</label>
+                        <input type="text" id="title" name="title" required 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label for="category" class="block text-sm font-medium mb-2">Category</label>
+                        <select id="category" name="category" required 
+                                class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Select Category</option>
+                            <option value="Technology">Technology</option>
+                            <option value="AI">AI & Machine Learning</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Business">Business</option>
+                            <option value="Innovation">Innovation</option>
+                            <option value="Tutorial">Tutorial</option>
+                            <option value="Product Demo">Product Demo</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="summary" class="block text-sm font-medium mb-2">Summary</label>
+                    <textarea id="summary" name="summary" rows="3" required 
+                              class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              placeholder="Brief summary of the article..."></textarea>
+                </div>
+                <div>
+                    <label for="content" class="block text-sm font-medium mb-2">Content</label>
+                    <textarea id="content" name="content" rows="6" required 
+                              class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              placeholder="Full article content..."></textarea>
+                </div>
+                
+                <!-- Media Section -->
+                <div class="border-t border-gray-700 pt-4">
+                    <h3 class="text-lg font-medium mb-4">Media Content</h3>
+                    
+                    <!-- Media Type Selection -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Media Type</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="mediaType" value="none" checked class="mr-2">
+                                <span>No Media</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="mediaType" value="image" class="mr-2">
+                                <span>Image</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="mediaType" value="video" class="mr-2">
+                                <span>Video</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div id="image-section" class="hidden">
+                        <label class="block text-sm font-medium mb-2">Image</label>
+                        <div class="upload-area p-6 text-center rounded-lg cursor-pointer" id="image-upload">
+                            <svg class="w-12 h-12 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <p class="text-gray-400">Click to upload image or drag and drop</p>
+                            <p class="text-xs text-gray-500 mt-1">PNG, JPG, GIF up to 10MB</p>
+                        </div>
+                        <input type="file" id="image-file" accept="image/*" class="hidden">
+                        <div id="image-preview" class="mt-4 hidden">
+                            <img id="preview-img" class="max-w-xs rounded-lg">
+                            <button type="button" id="remove-image" class="mt-2 px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-sm transition">
+                                Remove Image
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Video Upload -->
+                    <div id="video-section" class="hidden">
+                        <label class="block text-sm font-medium mb-2">Video</label>
+                        <div class="upload-area p-6 text-center rounded-lg cursor-pointer" id="video-upload">
+                            <svg class="w-12 h-12 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                            <p class="text-gray-400">Click to upload video or drag and drop</p>
+                            <p class="text-xs text-gray-500 mt-1">MP4, WebM up to 100MB</p>
+                        </div>
+                        <input type="file" id="video-file" accept="video/*" class="hidden">
+                        <div id="video-preview" class="mt-4 hidden">
+                            <video id="preview-video" controls class="max-w-xs rounded-lg">
+                                Your browser does not support the video tag.
+                            </video>
+                            <button type="button" id="remove-video" class="mt-2 px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-sm transition">
+                                Remove Video
+                            </button>
+                        </div>
+                        <div id="upload-progress" class="mt-4 hidden">
+                            <div class="bg-gray-700 rounded-full h-2">
+                                <div id="progress-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <p id="progress-text" class="text-sm text-gray-400 mt-1">Uploading...</p>
+                        </div>
+                    </div>
+
+                    <!-- External Media URL -->
+                    <div class="mt-4">
+                        <label for="external-media" class="block text-sm font-medium mb-2">Or use external URL</label>
+                        <input type="url" id="external-media" name="externalMedia" 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                               placeholder="https://example.com/image.jpg or https://youtube.com/watch?v=...">
+                        <p class="text-xs text-gray-500 mt-1">For YouTube videos, just paste the URL</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="read-time" class="block text-sm font-medium mb-2">Read Time (minutes)</label>
+                        <input type="number" id="read-time" name="readTime" min="1" max="60" value="5" 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label for="featured" class="flex items-center">
+                            <input type="checkbox" id="featured" name="featured" class="mr-2">
+                            <span class="text-sm font-medium">Featured Article</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="flex space-x-4">
+                    <button type="submit" id="submit-btn" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md font-medium transition">
+                        Add Article
+                    </button>
+                    <button type="button" id="clear-form" class="px-6 py-2 bg-gray-600 hover:bg-gray-700 rounded-md font-medium transition">
+                        Clear Form
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- News List -->
+        <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold">Published Articles</h2>
+                <div class="flex space-x-2">
+                    <input type="text" id="search-news" placeholder="Search articles..." 
+                           class="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <select id="filter-category" 
+                            class="px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="">All Categories</option>
+                        <option value="Technology">Technology</option>
+                        <option value="AI">AI & Machine Learning</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Business">Business</option>
+                        <option value="Innovation">Innovation</option>
+                        <option value="Tutorial">Tutorial</option>
+                        <option value="Product Demo">Product Demo</option>
+                    </select>
+                </div>
+            </div>
+            <div id="news-list" class="space-y-4">
+                <!-- News items will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-gray-800 rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Edit Article</h3>
+                    <button id="close-modal" class="text-gray-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <form id="edit-form" class="space-y-4">
+                    <input type="hidden" id="edit-id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="edit-title" class="block text-sm font-medium mb-2">Title</label>
+                            <input type="text" id="edit-title" required 
+                                   class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label for="edit-category" class="block text-sm font-medium mb-2">Category</label>
+                            <select id="edit-category" required 
+                                    class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="Technology">Technology</option>
+                                <option value="AI">AI & Machine Learning</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Business">Business</option>
+                                <option value="Innovation">Innovation</option>
+                                <option value="Tutorial">Tutorial</option>
+                                <option value="Product Demo">Product Demo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="edit-summary" class="block text-sm font-medium mb-2">Summary</label>
+                        <textarea id="edit-summary" rows="3" required 
+                                  class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
+                    <div>
+                        <label for="edit-content" class="block text-sm font-medium mb-2">Content</label>
+                        <textarea id="edit-content" rows="6" required 
+                                  class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="edit-external-media" class="block text-sm font-medium mb-2">Media URL</label>
+                            <input type="url" id="edit-external-media" 
+                                   class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label for="edit-read-time" class="block text-sm font-medium mb-2">Read Time (minutes)</label>
+                            <input type="number" id="edit-read-time" min="1" max="60" 
+                                   class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button type="submit" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md font-medium transition">
+                            Update Article
+                        </button>
+                        <button type="button" id="cancel-edit" class="px-6 py-2 bg-gray-600 hover:bg-gray-700 rounded-md font-medium transition">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXyeQO5p_Tgj70FA-kuh2GwqF-iJ6SScw",
+            authDomain: "dulus-data-dynamics.firebaseapp.com",
+            projectId: "dulus-data-dynamics",
+            storageBucket: "dulus-data-dynamics.firebasestorage.app",
+            messagingSenderId: "469997176513",
+            appId: "1:469997176513:web:e40c1a58b29f72a30d3640",
+            measurementId: "G-QYCXWVR958"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // Update status
+        function updateStatus(status, color) {
+            document.getElementById('status-indicator').className = `w-3 h-3 rounded-full bg-${color}-500`;
+            document.getElementById('status-text').textContent = status;
+        }
+
+        // Simple authentication
+        const ADMIN_PASSWORD = 'dulu2024';
+        
+        if (!localStorage.getItem('adminAuthenticated')) {
+            const password = prompt('Enter admin password:');
+            if (password === ADMIN_PASSWORD) {
+                localStorage.setItem('adminAuthenticated', 'true');
+            } else {
+                alert('Access denied');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // News management with Firebase
+        class NewsManager {
+            constructor() {
+                this.news = [];
+                this.init();
+            }
+
+            async init() {
+                try {
+                    updateStatus('Connected to Firebase', 'green');
+                    await this.loadNews();
+                    this.setupEventListeners();
+                } catch (error) {
+                    console.error('Firebase connection failed:', error);
+                    updateStatus('Firebase connection failed - using local storage', 'red');
+                    this.useLocalStorage();
+                }
+            }
+
+            useLocalStorage() {
+                this.news = JSON.parse(localStorage.getItem('news') || '[]');
+                this.loadNews();
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                // Form submission
+                document.getElementById('news-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addNews();
+                });
+
+                // Media type selection
+                document.querySelectorAll('input[name="mediaType"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        this.toggleMediaSections(e.target.value);
+                    });
+                });
+
+                // File uploads
+                this.setupFileUploads();
+
+                // Clear form
+                document.getElementById('clear-form').addEventListener('click', () => {
+                    document.getElementById('news-form').reset();
+                    this.toggleMediaSections('none');
+                });
+
+                // Search and filter
+                document.getElementById('search-news').addEventListener('input', (e) => {
+                    this.filterNews();
+                });
+
+                document.getElementById('filter-category').addEventListener('change', () => {
+                    this.filterNews();
+                });
+
+                // Modal controls
+                document.getElementById('close-modal').addEventListener('click', () => {
+                    this.closeModal();
+                });
+
+                document.getElementById('cancel-edit').addEventListener('click', () => {
+                    this.closeModal();
+                });
+
+                document.getElementById('edit-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.updateNews();
+                });
+
+                // Logout
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    localStorage.removeItem('adminAuthenticated');
+                    window.location.href = 'index.html';
+                });
+            }
+
+            setupFileUploads() {
+                // Image upload
+                const imageUpload = document.getElementById('image-upload');
+                const imageFile = document.getElementById('image-file');
+
+                imageUpload.addEventListener('click', () => imageFile.click());
+                imageUpload.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    imageUpload.classList.add('dragover');
+                });
+                imageUpload.addEventListener('dragleave', () => {
+                    imageUpload.classList.remove('dragover');
+                });
+                imageUpload.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    imageUpload.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        imageFile.files = files;
+                        this.handleImageUpload(files[0]);
+                    }
+                });
+
+                imageFile.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        this.handleImageUpload(e.target.files[0]);
+                    }
+                });
+
+                // Video upload
+                const videoUpload = document.getElementById('video-upload');
+                const videoFile = document.getElementById('video-file');
+
+                videoUpload.addEventListener('click', () => videoFile.click());
+                videoUpload.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    videoUpload.classList.add('dragover');
+                });
+                videoUpload.addEventListener('dragleave', () => {
+                    videoUpload.classList.remove('dragover');
+                });
+                videoUpload.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    videoUpload.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        videoFile.files = files;
+                        this.handleVideoUpload(files[0]);
+                    }
+                });
+
+                videoFile.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        this.handleVideoUpload(e.target.files[0]);
+                    }
+                });
+
+                // Remove buttons
+                document.getElementById('remove-image').addEventListener('click', () => {
+                    this.removeMedia('image');
+                });
+
+                document.getElementById('remove-video').addEventListener('click', () => {
+                    this.removeMedia('video');
+                });
+            }
+
+            toggleMediaSections(type) {
+                document.getElementById('image-section').classList.toggle('hidden', type !== 'image');
+                document.getElementById('video-section').classList.toggle('hidden', type !== 'video');
+            }
+
+            handleImageUpload(file) {
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('Image size must be less than 10MB');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('image-preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+
+            async handleVideoUpload(file) {
+                if (file.size > 100 * 1024 * 1024) {
+                    alert('Video size must be less than 100MB');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('preview-video').src = e.target.result;
+                    document.getElementById('video-preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+
+            removeMedia(type) {
+                if (type === 'image') {
+                    document.getElementById('image-file').value = '';
+                    document.getElementById('image-preview').classList.add('hidden');
+                } else if (type === 'video') {
+                    document.getElementById('video-file').value = '';
+                    document.getElementById('video-preview').classList.add('hidden');
+                }
+            }
+
+            async uploadFile(file, path) {
+                const storageRef = storage.ref();
+                const fileRef = storageRef.child(path);
+                const uploadTask = fileRef.put(file);
+
+                return new Promise((resolve, reject) => {
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            document.getElementById('progress-bar').style.width = progress + '%';
+                            document.getElementById('progress-text').textContent = `Uploading... ${Math.round(progress)}%`;
+                        },
+                        (error) => reject(error),
+                        () => {
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                resolve(downloadURL);
+                            });
+                        }
+                    );
+                });
+            }
+
+            async addNews() {
+                const formData = new FormData(document.getElementById('news-form'));
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Adding...';
+
+                try {
+                    let mediaUrl = formData.get('externalMedia');
+                    const mediaType = formData.get('mediaType');
+
+                    // Handle file uploads
+                    if (mediaType === 'image' && document.getElementById('image-file').files.length > 0) {
+                        const file = document.getElementById('image-file').files[0];
+                        document.getElementById('upload-progress').classList.remove('hidden');
+                        mediaUrl = await this.uploadFile(file, `news/images/${Date.now()}_${file.name}`);
+                        document.getElementById('upload-progress').classList.add('hidden');
+                    } else if (mediaType === 'video' && document.getElementById('video-file').files.length > 0) {
+                        const file = document.getElementById('video-file').files[0];
+                        document.getElementById('upload-progress').classList.remove('hidden');
+                        mediaUrl = await this.uploadFile(file, `news/videos/${Date.now()}_${file.name}`);
+                        document.getElementById('upload-progress').classList.add('hidden');
+                    }
+
+                    // Handle YouTube URLs
+                    if (mediaUrl && mediaUrl.includes('youtube.com')) {
+                        const videoId = this.extractYouTubeId(mediaUrl);
+                        if (videoId) {
+                            mediaUrl = `https://www.youtube.com/embed/${videoId}`;
+                        }
+                    }
+
+                    const newsItem = {
+                        id: Date.now(),
+                        title: formData.get('title'),
+                        category: formData.get('category'),
+                        summary: formData.get('summary'),
+                        content: formData.get('content'),
+                        mediaUrl: mediaUrl || null,
+                        mediaType: mediaType === 'none' ? null : mediaType,
+                        readTime: parseInt(formData.get('readTime')) || 5,
+                        featured: formData.get('featured') === 'on',
+                        date: new Date().toISOString(),
+                        published: true
+                    };
+
+                    if (db) {
+                        await db.collection('news').add(newsItem);
+                    } else {
+                        this.news.unshift(newsItem);
+                        localStorage.setItem('news', JSON.stringify(this.news));
+                    }
+
+                    this.loadNews();
+                    document.getElementById('news-form').reset();
+                    this.toggleMediaSections('none');
+                    this.showNotification('Article added successfully!', 'success');
+                } catch (error) {
+                    console.error('Error adding news:', error);
+                    this.showNotification('Error adding article. Please try again.', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Add Article';
+                }
+            }
+
+            extractYouTubeId(url) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+            }
+
+            async loadNews() {
+                try {
+                    if (db) {
+                        const snapshot = await db.collection('news').orderBy('date', 'desc').get();
+                        this.news = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    }
+                    this.renderNewsList(this.news);
+                } catch (error) {
+                    console.error('Error loading news:', error);
+                    this.useLocalStorage();
+                }
+            }
+
+            async updateNews() {
+                const id = document.getElementById('edit-id').value;
+                const updates = {
+                    title: document.getElementById('edit-title').value,
+                    category: document.getElementById('edit-category').value,
+                    summary: document.getElementById('edit-summary').value,
+                    content: document.getElementById('edit-content').value,
+                    mediaUrl: document.getElementById('edit-external-media').value || null,
+                    readTime: parseInt(document.getElementById('edit-read-time').value) || 5,
+                    lastUpdated: new Date().toISOString()
+                };
+
+                try {
+                    if (db) {
+                        await db.collection('news').doc(id).update(updates);
+                    } else {
+                        const newsIndex = this.news.findIndex(item => item.id === parseInt(id));
+                        if (newsIndex !== -1) {
+                            this.news[newsIndex] = { ...this.news[newsIndex], ...updates };
+                            localStorage.setItem('news', JSON.stringify(this.news));
+                        }
+                    }
+
+                    this.loadNews();
+                    this.closeModal();
+                    this.showNotification('Article updated successfully!', 'success');
+                } catch (error) {
+                    console.error('Error updating news:', error);
+                    this.showNotification('Error updating article. Please try again.', 'error');
+                }
+            }
+
+            async deleteNews(id) {
+                if (confirm('Are you sure you want to delete this article?')) {
+                    try {
+                        if (db) {
+                            await db.collection('news').doc(id).delete();
+                        } else {
+                            this.news = this.news.filter(item => item.id !== id);
+                            localStorage.setItem('news', JSON.stringify(this.news));
+                        }
+
+                        this.loadNews();
+                        this.showNotification('Article deleted successfully!', 'success');
+                    } catch (error) {
+                        console.error('Error deleting news:', error);
+                        this.showNotification('Error deleting article. Please try again.', 'error');
+                    }
+                }
+            }
+
+            editNews(id) {
+                const newsItem = this.news.find(item => item.id === id);
+                if (newsItem) {
+                    document.getElementById('edit-id').value = newsItem.id;
+                    document.getElementById('edit-title').value = newsItem.title;
+                    document.getElementById('edit-category').value = newsItem.category;
+                    document.getElementById('edit-summary').value = newsItem.summary;
+                    document.getElementById('edit-content').value = newsItem.content;
+                    document.getElementById('edit-external-media').value = newsItem.mediaUrl || '';
+                    document.getElementById('edit-read-time').value = newsItem.readTime;
+                    this.openModal();
+                }
+            }
+
+            openModal() {
+                document.getElementById('edit-modal').classList.remove('hidden');
+            }
+
+            closeModal() {
+                document.getElementById('edit-modal').classList.add('hidden');
+            }
+
+            filterNews() {
+                const searchTerm = document.getElementById('search-news').value.toLowerCase();
+                const categoryFilter = document.getElementById('filter-category').value;
+                
+                const filteredNews = this.news.filter(item => {
+                    const matchesSearch = item.title.toLowerCase().includes(searchTerm) || 
+                                        item.summary.toLowerCase().includes(searchTerm);
+                    const matchesCategory = !categoryFilter || item.category === categoryFilter;
+                    return matchesSearch && matchesCategory;
+                });
+
+                this.renderNewsList(filteredNews);
+            }
+
+            renderNewsList(newsItems) {
+                const newsList = document.getElementById('news-list');
+                
+                if (newsItems.length === 0) {
+                    newsList.innerHTML = '<p class="text-gray-400 text-center py-8">No articles found</p>';
+                    return;
+                }
+
+                newsList.innerHTML = newsItems.map(item => `
+                    <div class="news-item bg-gray-700 rounded-lg p-4 border border-gray-600">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold mb-1">${item.title}</h3>
+                                <div class="flex items-center space-x-4 text-sm text-gray-400">
+                                    <span class="bg-indigo-600 px-2 py-1 rounded">${item.category}</span>
+                                    <span>${new Date(item.date).toLocaleDateString()}</span>
+                                    <span>${item.readTime} min read</span>
+                                    ${item.featured ? '<span class="bg-yellow-600 px-2 py-1 rounded">Featured</span>' : ''}
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button onclick="newsManager.editNews('${item.id}')" 
+                                        class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm transition">
+                                    Edit
+                                </button>
+                                <button onclick="newsManager.deleteNews('${item.id}')" 
+                                        class="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-sm transition">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-3">${item.summary}</p>
+                        ${item.mediaUrl ? `
+                            <div class="mb-3">
+                                ${item.mediaType === 'video' || item.mediaUrl.includes('youtube.com') ? 
+                                    `<video src="${item.mediaUrl}" controls class="w-full h-32 object-cover rounded"></video>` :
+                                    `<img src="${item.mediaUrl}" alt="${item.title}" class="w-full h-32 object-cover rounded">`
+                                }
+                            </div>
+                        ` : ''}
+                        <div class="text-sm text-gray-400">
+                            ${item.content.substring(0, 150)}${item.content.length > 150 ? '...' : ''}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 px-6 py-3 rounded-md text-white z-50 transition-all duration-300 ${
+                    type === 'success' ? 'bg-green-600' : type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+                }`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+
+        // Initialize news manager
+        const newsManager = new NewsManager();
+    </script>
+</body>
+</html> 

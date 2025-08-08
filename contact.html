@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Dulu's Data Dynamics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <style>
+        .contact-card {
+            transition: all 0.3s ease;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        .download-btn {
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-600">
+                        DULU'S DATA DYNAMICS
+                    </span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md text-sm font-medium transition">
+                        ← Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                Get In Touch
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                Ready to transform your ideas into reality? Let's discuss your next project.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- Phone Contact -->
+                <div class="contact-card bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-indigo-500">
+                    <div class="w-12 h-12 bg-indigo-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Call Us</h3>
+                    <p class="text-gray-400 mb-4">Speak directly with our team</p>
+                    <a href="tel:+27736461288" class="text-indigo-400 hover:text-indigo-300 font-medium transition">
+                        +27 73 646 1288
+                    </a>
+                </div>
+
+                <!-- WhatsApp Contact -->
+                <div class="contact-card bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-green-500">
+                    <div class="w-12 h-12 bg-green-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">WhatsApp</h3>
+                    <p class="text-gray-400 mb-4">Quick chat and file sharing</p>
+                    <a href="https://wa.me/27736461288" target="_blank" class="text-green-400 hover:text-green-300 font-medium transition">
+                        Start Chat
+                    </a>
+                </div>
+
+                <!-- Email Contact -->
+                <div class="contact-card bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-indigo-500">
+                    <div class="w-12 h-12 bg-indigo-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Email Us</h3>
+                    <p class="text-gray-400 mb-4">Send us a detailed message</p>
+                    <a href="mailto:dulusdatadynamics@gmail.com" class="text-indigo-400 hover:text-indigo-300 font-medium transition">
+                        dulusdatadynamics@gmail.com
+                    </a>
+                </div>
+
+                <!-- Instagram Contact -->
+                <div class="contact-card bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-pink-500">
+                    <div class="w-12 h-12 bg-pink-900/30 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-pink-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Follow Us</h3>
+                    <p class="text-gray-400 mb-4">Stay updated on Instagram</p>
+                    <a href="https://www.instagram.com/dulusdatadynamics" target="_blank" class="text-pink-400 hover:text-pink-300 font-medium transition">
+                        @dulusdatadynamics
+                    </a>
+                </div>
+            </div>
+
+    
+
+    <!-- Downloadable News Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Download Our Latest Content</h2>
+            <div id="downloadable-news" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- News items will be loaded here -->
+                <div class="text-center py-12">
+                    <div class="animate-pulse flex space-x-4">
+                        <div class="flex-1 space-y-4 py-1">
+                            <div class="h-48 bg-gray-700 rounded"></div>
+                            <div class="space-y-2">
+                                <div class="h-4 bg-gray-700 rounded"></div>
+                                <div class="h-4 bg-gray-700 rounded w-5/6"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="mb-6">
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-600">
+                    DULU'S DATA DYNAMICS
+                </span>
+                <p class="text-gray-400 mt-2">The Future of Tech</p>
+            </div>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="tel:+27736461288" class="text-gray-400 hover:text-indigo-400 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                </a>
+                <a href="mailto:dulusdatadynamics@gmail.com" class="text-gray-400 hover:text-indigo-400 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/dulusdatadynamics" target="_blank" class="text-gray-400 hover:text-indigo-400 transition">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="https://wa.me/27736461288" target="_blank" class="text-gray-400 hover:text-green-400 transition">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="text-gray-400 text-sm">
+                <p>© 2024 Dulu's Data Dynamics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXyeQO5p_Tgj70FA-kuh2GwqF-iJ6SScw",
+            authDomain: "dulus-data-dynamics.firebaseapp.com",
+            projectId: "dulus-data-dynamics",
+            storageBucket: "dulus-data-dynamics.firebasestorage.app",
+            messagingSenderId: "469997176513",
+            appId: "1:469997176513:web:e40c1a58b29f72a30d3640",
+            measurementId: "G-QYCXWVR958"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Load downloadable news
+        async function loadDownloadableNews() {
+            const newsContainer = document.getElementById('downloadable-news');
+            let news = [];
+            
+            try {
+                // Try to load from Firebase first
+                const snapshot = await db.collection('news').orderBy('date', 'desc').limit(9).get();
+                news = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (error) {
+                console.log('Firebase not available, using localStorage');
+                // Fallback to localStorage
+                news = JSON.parse(localStorage.getItem('news') || '[]');
+            }
+            
+            if (news.length === 0) {
+                newsContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="text-gray-400">
+                            <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                            </svg>
+                            <p class="text-lg">No downloadable content yet</p>
+                            <p class="text-sm">Check back soon for updates!</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            newsContainer.innerHTML = news.map(item => `
+                <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-700 hover:border-indigo-500 transition group">
+                    ${item.mediaUrl ? `
+                        <div class="relative overflow-hidden">
+                            ${item.mediaType === 'video' || item.mediaUrl.includes('youtube.com') ? `
+                                <div class="w-full h-48 bg-gray-900 flex items-center justify-center">
+                                    <video src="${item.mediaUrl}" class="w-full h-full object-cover" preload="metadata">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                                        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            ` : `
+                                <img src="${item.mediaUrl}" alt="${item.title}" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+                            `}
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-indigo-600 text-white px-2 py-1 rounded text-xs font-medium">${item.category}</span>
+                                ${item.featured ? '<span class="bg-yellow-600 text-white px-2 py-1 rounded text-xs font-medium ml-2">Featured</span>' : ''}
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="h-48 bg-gradient-to-br from-indigo-900/50 to-purple-900/50 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                            </svg>
+                        </div>
+                    `}
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs text-gray-400">${new Date(item.date).toLocaleDateString()}</span>
+                            <span class="text-xs text-gray-400">${item.readTime} min read</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-400 transition">${item.title}</h3>
+                        <p class="text-gray-400 mb-4">${item.summary}</p>
+                        <div class="flex space-x-2">
+                            <button onclick="downloadNewsContent('${item.id}')" class="download-btn flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md font-medium text-white transition">
+                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                Download
+                            </button>
+                            <button onclick="viewNewsContent('${item.id}')" class="px-4 py-2 border border-indigo-600 text-indigo-400 hover:bg-indigo-900/30 rounded-md font-medium transition">
+                                View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Download news content as PDF/text file
+        async function downloadNewsContent(newsId) {
+            let news = [];
+            
+            try {
+                // Try to get from Firebase first
+                const doc = await db.collection('news').doc(newsId).get();
+                if (doc.exists) {
+                    news = [{ id: doc.id, ...doc.data() }];
+                }
+            } catch (error) {
+                // Fallback to localStorage
+                news = JSON.parse(localStorage.getItem('news') || '[]');
+            }
+            
+            const newsItem = news.find(item => item.id === newsId);
+            
+            if (!newsItem) {
+                alert('Content not found');
+                return;
+            }
+
+            // Create downloadable content
+            const content = `
+DULU'S DATA DYNAMICS - ${newsItem.title.toUpperCase()}
+
+Category: ${newsItem.category}
+Date: ${new Date(newsItem.date).toLocaleDateString()}
+Read Time: ${newsItem.readTime} minutes
+
+SUMMARY:
+${newsItem.summary}
+
+FULL CONTENT:
+${newsItem.content}
+
+---
+Downloaded from Dulu's Data Dynamics
+Contact: +27 73 646 1288
+Email: dulusdatadynamics@gmail.com
+Website: https://dulusdatadynamics.com
+            `;
+
+            // Create and download file
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${newsItem.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${new Date().getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
+            // Show success message
+            showNotification('Content downloaded successfully!', 'success');
+        }
+
+        // View news content in modal
+        async function viewNewsContent(newsId) {
+            let news = [];
+            
+            try {
+                // Try to get from Firebase first
+                const doc = await db.collection('news').doc(newsId).get();
+                if (doc.exists) {
+                    news = [{ id: doc.id, ...doc.data() }];
+                }
+            } catch (error) {
+                // Fallback to localStorage
+                news = JSON.parse(localStorage.getItem('news') || '[]');
+            }
+            
+            const newsItem = news.find(item => item.id === newsId);
+            
+            if (!newsItem) return;
+
+            // Create modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4';
+            
+            let mediaContent = '';
+            if (newsItem.mediaUrl) {
+                if (newsItem.mediaType === 'video' || newsItem.mediaUrl.includes('youtube.com')) {
+                    if (newsItem.mediaUrl.includes('youtube.com/embed/')) {
+                        mediaContent = `
+                            <div class="mb-6">
+                                <iframe src="${newsItem.mediaUrl}" 
+                                        class="w-full h-96 rounded-lg" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+                        `;
+                    } else {
+                        mediaContent = `
+                            <div class="mb-6">
+                                <video src="${newsItem.mediaUrl}" 
+                                       controls 
+                                       class="w-full h-96 rounded-lg">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        `;
+                    }
+                } else {
+                    mediaContent = `
+                        <img src="${newsItem.mediaUrl}" alt="${newsItem.title}" class="w-full h-64 object-cover rounded-lg mb-6">
+                    `;
+                }
+            }
+
+            modal.innerHTML = `
+                <div class="bg-gray-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="bg-indigo-600 text-white px-3 py-1 rounded text-sm font-medium">${newsItem.category}</span>
+                                ${newsItem.featured ? '<span class="bg-yellow-600 text-white px-3 py-1 rounded text-sm font-medium ml-2">Featured</span>' : ''}
+                                <div class="flex items-center space-x-4 mt-2 text-sm text-gray-400">
+                                    <span>${new Date(newsItem.date).toLocaleDateString()}</span>
+                                    <span>${newsItem.readTime} min read</span>
+                                </div>
+                            </div>
+                            <button onclick="this.closest('.fixed').remove()" class="text-gray-400 hover:text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <h2 class="text-3xl font-bold mb-4">${newsItem.title}</h2>
+                        ${mediaContent}
+                        <div class="prose prose-invert max-w-none">
+                            <p class="text-lg text-gray-300 mb-6">${newsItem.summary}</p>
+                            <div class="text-gray-300 leading-relaxed">${newsItem.content.replace(/\n/g, '<br>')}</div>
+                        </div>
+                        <div class="mt-6 text-center">
+                            <button onclick="downloadNewsContent('${newsItem.id}')" class="download-btn px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-md font-medium text-white transition">
+                                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                Download This Content
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+    
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDownloadableNews();
+        });
+    </script>
+</body>
+</html> 
